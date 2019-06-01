@@ -33,23 +33,22 @@ namespace LiveLarn.Service.Identity.Models.Auth
         {
             return new List<ApiResource>
             {
-                new ApiResource(AppConfiguration.Instance.Configuration.GetValue<string>("Auth0:ApiResource"), "Koton.ArthurService.Store")
+                new ApiResource(AppConfiguration.Instance.Configuration.GetValue<string>("Auth0:ApiResource"), "LiveLarn.Service.User")
             };
         }
 
         public static IEnumerable<Client> GetClients()
         {
-            // client credentials client
             return new List<Client>
             {
                 new Client
                 {
-                    ClientId = "security.client",
+                    ClientId = "LiveLarn.Service.User.Client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
                     ClientSecrets =
                     {
-                        new Secret("security.secret".Sha256())
+                        new Secret("LiveLarn.Service.User.Client.Secret".Sha256())
                     },
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -58,19 +57,6 @@ namespace LiveLarn.Service.Identity.Models.Auth
                         IdentityServerConstants.StandardScopes.Address,
                         AppConfiguration.Instance.Configuration.GetValue<string>("Auth0:ApiResource")
                     }
-                },
-                new Client
-                {
-                    ClientId = "client",
-                    // no interactive user, use the clientid/secret for authentication
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    // scopes that client has access to
-                    AllowedScopes = { "api1" }
                 }
             };
         }
@@ -81,7 +67,7 @@ namespace LiveLarn.Service.Identity.Models.Auth
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "ekin",
+                    Username = "LiveLarn",
                     Password = "password"
                 }
 

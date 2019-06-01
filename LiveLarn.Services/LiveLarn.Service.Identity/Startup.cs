@@ -32,7 +32,7 @@ namespace LiveLarn.Service.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationIdentityDBContext>(
-              options => options.UseSqlServer(AppConfiguration.Instance.Configuration.GetConnectionString("ArthurServiceSecurityDB")));
+              options => options.UseNpgsql(AppConfiguration.Instance.Configuration.GetConnectionString("IdentityDbContext")));
 
             services.AddIdentity<ApplicationUser, IdentityRole<string>>()
                 .AddEntityFrameworkStores<ApplicationIdentityDBContext>()
@@ -44,13 +44,13 @@ namespace LiveLarn.Service.Identity
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(Config.GetUsers())
-                .AddAspNetIdentity<ApplicationUser>()
+                //.AddAspNetIdentity<ApplicationUser>()
                 .AddInMemoryPersistedGrants()
                 .AddDeveloperSigningCredential();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Koton.ArthurService.Security", Version = "v1" });
+                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "LiveLarn.Identity", Version = "v1" });
             });
         }
 
@@ -65,6 +65,8 @@ namespace LiveLarn.Service.Identity
             {
                 app.UseHsts();
             }
+            app.UseIdentityServer();
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();
