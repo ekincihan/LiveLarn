@@ -18,6 +18,7 @@ namespace LiveLarn.Core.Infrastructure.Base
         public DateTime? CreateDate { get; set; }
         public Guid? CreatedBy { get; set; }
         [Required]
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
     }
 }
+ 
