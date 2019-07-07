@@ -38,7 +38,6 @@ namespace LiveLarn.Service.Company
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvcCore().AddApiExplorer();
             services.AddMvc();
             services.AddOData();
             services.AddMvcCore(options =>
