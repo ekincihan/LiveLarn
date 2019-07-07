@@ -90,13 +90,13 @@ namespace LiveLarn.Service.Company
             app.UseMvc();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 
-            builder.EntitySet<Branch>("Branchs");
             builder.EntitySet<Model.Entity.Company>("Companys");
+            builder.EntitySet<Branch>("Branchs");
 
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
-                routeBuilder.Expand().Select().Count().OrderBy().Filter();
+                routeBuilder.Expand(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed).Select().Count().OrderBy().Filter();
                 routeBuilder.EnableDependencyInjection();
             });
             app.UseSwagger();

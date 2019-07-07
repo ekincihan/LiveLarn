@@ -13,8 +13,6 @@ namespace LiveLarn.Service.Company.Model.Entity
         public string Code { get; set; }
         [StringLength(150)]
         public string Name { get; set; }
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
         [StringLength(150)]
         [DataType(DataType.EmailAddress)]
         public string Mail { get; set; }

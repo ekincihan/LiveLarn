@@ -29,7 +29,7 @@ namespace LiveLarn.Service.Company.Controllers
         {
             using (var context = _context.Context())
             {
-                return await context.Set<Model.Entity.Company>().ToListAsync();
+                return await context.Set<Model.Entity.Company>().Include(t=>t.Branches).ToListAsync();
             }
         }
         [HttpPost]
