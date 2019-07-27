@@ -10,15 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LiveLarn.Service.Company.Migrations
 {
     [DbContext(typeof(CompanyDbContext))]
-    [Migration("20190629185615_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190707133409_Initial Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("LiveLarn.Service.Company.Model.Entity.Branch", b =>
@@ -37,9 +37,7 @@ namespace LiveLarn.Service.Company.Migrations
                     b.Property<string>("Code")
                         .HasMaxLength(4);
 
-                    b.Property<int>("CompanyId");
-
-                    b.Property<long?>("CompanyId1");
+                    b.Property<long?>("CompanyId");
 
                     b.Property<int>("CountryId");
 
@@ -65,7 +63,7 @@ namespace LiveLarn.Service.Company.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId1");
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Branches");
                 });
@@ -95,9 +93,9 @@ namespace LiveLarn.Service.Company.Migrations
 
             modelBuilder.Entity("LiveLarn.Service.Company.Model.Entity.Branch", b =>
                 {
-                    b.HasOne("LiveLarn.Service.Company.Model.Entity.Company", "Company")
+                    b.HasOne("LiveLarn.Service.Company.Model.Entity.Company")
                         .WithMany("Branches")
-                        .HasForeignKey("CompanyId1");
+                        .HasForeignKey("CompanyId");
                 });
 #pragma warning restore 612, 618
         }

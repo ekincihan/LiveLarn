@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace LiveLarn.Service.Company.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,31 +39,30 @@ namespace LiveLarn.Service.Company.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(maxLength: 4, nullable: true),
                     Name = table.Column<string>(maxLength: 150, nullable: true),
-                    CompanyId = table.Column<int>(nullable: false),
-                    CompanyId1 = table.Column<long>(nullable: true),
                     Mail = table.Column<string>(maxLength: 150, nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     AddressLine1 = table.Column<string>(maxLength: 250, nullable: true),
                     AddressLine2 = table.Column<string>(maxLength: 250, nullable: true),
                     CountryId = table.Column<int>(nullable: false),
                     CityId = table.Column<int>(nullable: false),
-                    DistrictId = table.Column<int>(nullable: false)
+                    DistrictId = table.Column<int>(nullable: false),
+                    CompanyId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Branches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Branches_Companies_CompanyId1",
-                        column: x => x.CompanyId1,
+                        name: "FK_Branches_Companies_CompanyId",
+                        column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Branches_CompanyId1",
+                name: "IX_Branches_CompanyId",
                 table: "Branches",
-                column: "CompanyId1");
+                column: "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using IdentityServer4.AccessTokenValidation;
 using LiveLarn.Core.Configuration;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Core.DataAccess.EntityFramework;
-using LiveLarn.Service.Company.Configuration;
-using LiveLarn.Service.Company.Controllers;
 using LiveLarn.Service.Company.DataAccess.Contexts;
 using LiveLarn.Service.Company.Model.Entity;
 using Microsoft.AspNet.OData.Builder;
@@ -15,14 +11,10 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace LiveLarn.Service.Company
 {
@@ -38,7 +30,6 @@ namespace LiveLarn.Service.Company
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvcCore().AddApiExplorer();
             services.AddMvc();
             services.AddOData();
             services.AddMvcCore(options =>
@@ -90,13 +81,13 @@ namespace LiveLarn.Service.Company
             app.UseMvc();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 
-            builder.EntitySet<Branch>("Branchs");
             builder.EntitySet<Model.Entity.Company>("Companys");
+            builder.EntitySet<Branch>("Branchs");
 
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
-                routeBuilder.Expand().Select().Count().OrderBy().Filter();
+                routeBuilder.Expand(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed).Select().Count().OrderBy().Filter();
                 routeBuilder.EnableDependencyInjection();
             });
             app.UseSwagger();
