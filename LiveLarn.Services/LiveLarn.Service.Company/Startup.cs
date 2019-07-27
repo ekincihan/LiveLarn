@@ -87,7 +87,7 @@ namespace LiveLarn.Service.Company
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
-                routeBuilder.Expand(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed).Select().Count().OrderBy().Filter();
+                routeBuilder.Expand(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed).Select().Count().OrderBy().Filter().MaxTop(null);
                 routeBuilder.EnableDependencyInjection();
             });
             app.UseSwagger();
