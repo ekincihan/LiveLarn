@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.Service.Lookup", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.UnitTest.Company", "LiveLarn.UnitTest.Company\LiveLarn.UnitTest.Company.csproj", "{018A2C53-7CBC-46F9-9949-0714FDB727D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveLarn.UnitTest.Lookup", "LiveLarn.UnitTest.Lookup\LiveLarn.UnitTest.Lookup.csproj", "{05203777-9E64-4B29-A9AB-839DE76FCD7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.UnitTest.Lookup", "LiveLarn.UnitTest.Lookup\LiveLarn.UnitTest.Lookup.csproj", "{05203777-9E64-4B29-A9AB-839DE76FCD7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.Service.Education", "LiveLarn.Service.Education\LiveLarn.Service.Education.csproj", "{BB55366C-F267-4019-AE49-642ACB53A31C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{05203777-9E64-4B29-A9AB-839DE76FCD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05203777-9E64-4B29-A9AB-839DE76FCD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05203777-9E64-4B29-A9AB-839DE76FCD7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB55366C-F267-4019-AE49-642ACB53A31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB55366C-F267-4019-AE49-642ACB53A31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB55366C-F267-4019-AE49-642ACB53A31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB55366C-F267-4019-AE49-642ACB53A31C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
