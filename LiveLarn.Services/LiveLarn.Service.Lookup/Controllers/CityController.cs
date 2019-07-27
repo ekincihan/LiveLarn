@@ -13,32 +13,30 @@ namespace LiveLarn.Service.Lookup.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ODataRoutePrefix("Country")]
-    public class CountryController : ControllerBase
+    [ODataRoutePrefix("City")]
+    public class CityController : ControllerBase
     {
         private IApplicationContext<LookupDbContext> _context;
-        public CountryController(IApplicationContext<LookupDbContext> context)
+        public CityController(IApplicationContext<LookupDbContext> context)
         {
             _context = context;
         }
 
         [HttpGet]
         [EnableQuery()]
-        public async Task<ActionResult<IEnumerable<Country>>> Get()
+        public async Task<ActionResult<IEnumerable<City>>> Get()
         {
             using (var context = _context.Context())
             {
-                return await context.Set<Country>().Include(c=>c.Cities).ThenInclude(f => f.Districts).ToListAsync();
+                return await context.Set<City>().Include(f => f.Districts).ToListAsync();
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Post(Country country)
+        public async Task<IActionResult> Post(City city)
         {
             using (var context = _context.Context())
             {
-                country.CreateDate = country.CreateDate ?? DateTime.UtcNow;
-                country.IsActive = true;
-                await context.Set<Country>().AddAsync(country);
+                await context.Set<City>().AddAsync(city);
                 var result = await context.SaveChangesAsync();
 
                 if (result > 0)
