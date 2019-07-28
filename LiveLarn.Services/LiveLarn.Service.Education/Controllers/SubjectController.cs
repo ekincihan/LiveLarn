@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Service.Education.DataAccess;
+using LiveLarn.Service.Education.DataAccess.Abstract;
 using LiveLarn.Service.Education.Models.Entity;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
@@ -18,8 +19,8 @@ namespace LiveLarn.Service.Education.Controllers
     [ODataRoutePrefix("Subject")]
     public class SubjectController : ControllerBase
     {
-        private IApplicationContext<EducationDbContext> _context;
-        public SubjectController(IApplicationContext<EducationDbContext> context)
+        private readonly IEducationDbContext _context;
+        public SubjectController(IEducationDbContext context)
         {
             _context = context;
         }
@@ -28,26 +29,21 @@ namespace LiveLarn.Service.Education.Controllers
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<Subject>>> Get()
         {
-            using (var context = _context.Context())
-            {
-                return await context.Set<Subject>().ToListAsync();
-            }
+            return (await _context.Subjects.FindAsync<Subject>(filter: null)).Current.ToList();
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(Subject subject)
         {
-            using (var context = _context.Context())
+            try
             {
-                subject.CreateDate = subject.CreateDate ?? DateTime.UtcNow;
-                subject.IsActive = true;
-                await context.Set<Subject>().AddAsync(subject);
-                var result = await context.SaveChangesAsync();
+                await _context.Subjects.InsertOneAsync(subject);
 
-                if (result > 0)
-                    return new OkResult();
-                else
-                    return new BadRequestResult();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }

@@ -1,7 +1,10 @@
 ﻿using LiveLarn.Core.Configuration;
+using LiveLarn.Service.Education.DataAccess.Abstract;
 using LiveLarn.Service.Education.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +12,19 @@ using System.Threading.Tasks;
 
 namespace LiveLarn.Service.Education.DataAccess
 {
-    public class EducationDbContext : DbContext
+    public class EducationDbContext : IEducationDbContext
     {
-        private DbSet<Category> Categories { get; set; }
+        private readonly IMongoDatabase _db;
 
-        private DbSet<ClassLevel> ClassLevels { get; set; }
-
-        private DbSet<Subject> Subjects { get; set; }
-
-        private DbSet<Models.Entity.Type> Types { get; set; }
-
-        public EducationDbContext()
+        public EducationDbContext(IOptions<Settings> options)
         {
-                
+            var client = new MongoClient(options.Value.ConnectionString);
+            _db = client.GetDatabase(options.Value.Database);
         }
 
-        public EducationDbContext(DbContextOptions<EducationDbContext> options) : base(options)
-        {
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(AppConfiguration.Instance.Configuration.GetConnectionString("EducationDbContext"));
-            base.OnConfiguring(optionsBuilder);
-        }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
+        public IMongoCollection<Category> Categories => _db.GetCollection<Category>("Categories");
+        public IMongoCollection<ClassLevel> ClassLevels => _db.GetCollection<ClassLevel>("ClassLevels");
+        public IMongoCollection<Subject> Subjects => _db.GetCollection<Subject>("Subjects");
+        public IMongoCollection<Models.Entity.Type> Types => _db.GetCollection<Models.Entity.Type>("Types");
     }
 }

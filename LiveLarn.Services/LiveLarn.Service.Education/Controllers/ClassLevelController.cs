@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Service.Education.DataAccess;
+using LiveLarn.Service.Education.DataAccess.Abstract;
 using LiveLarn.Service.Education.Models.Entity;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
@@ -18,8 +19,8 @@ namespace LiveLarn.Service.Education.Controllers
     [ODataRoutePrefix("ClassLevel")]
     public class ClassLevelController : ControllerBase
     {
-        private IApplicationContext<EducationDbContext> _context;
-        public ClassLevelController(IApplicationContext<EducationDbContext> context)
+        private readonly IEducationDbContext _context;
+        public ClassLevelController(IEducationDbContext context)
         {
             _context = context;
         }
@@ -28,26 +29,21 @@ namespace LiveLarn.Service.Education.Controllers
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<ClassLevel>>> Get()
         {
-            using (var context = _context.Context())
-            {
-                return await context.Set<ClassLevel>().ToListAsync();
-            }
+            return (await _context.ClassLevels.FindAsync<ClassLevel>(filter: null)).Current.ToList();
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(ClassLevel classLevel)
         {
-            using (var context = _context.Context())
+            try
             {
-                classLevel.CreateDate = classLevel.CreateDate ?? DateTime.UtcNow;
-                classLevel.IsActive = true;
-                await context.Set<ClassLevel>().AddAsync(classLevel);
-                var result = await context.SaveChangesAsync();
+                await _context.ClassLevels.InsertOneAsync(classLevel);
 
-                if (result > 0)
-                    return new OkResult();
-                else
-                    return new BadRequestResult();
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }

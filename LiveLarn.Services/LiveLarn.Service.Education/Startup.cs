@@ -7,6 +7,9 @@ using LiveLarn.Core.Configuration;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Core.DataAccess.EntityFramework;
 using LiveLarn.Service.Education.DataAccess;
+using LiveLarn.Service.Education.DataAccess.Abstract;
+using LiveLarn.Service.Education.Models.Entity;
+using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Builder;
@@ -59,11 +62,17 @@ namespace LiveLarn.Service.Education
                    options.RequireHttpsMetadata = false; // only for development
                });
 
-            services.AddTransient<IApplicationContext<EducationDbContext>, EfApplicationContext<EducationDbContext>>();
-            
+            services.Configure<Settings>(
+            options =>
+            {
+                options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
+                options.Database = Configuration.GetSection("MongoDb:Database").Value;
+            });
+            services.AddTransient<IEducationDbContext, EducationDbContext>();
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "LiveLarn.Service.Lookup", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "LiveLarn.Service.Education", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>()
                 {
@@ -79,14 +88,30 @@ namespace LiveLarn.Service.Education
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+
             app.UseMvc();
+            var builder = new ODataConventionModelBuilder(app.ApplicationServices);
+
+            //builder.EntitySet<Category>("Categories");
+            //builder.EntitySet<Subject>("Subject");
+            //builder.EntitySet<Models.Entity.Type>("Types");
+            //builder.EntitySet<ClassLevel>("ClassLevels");
+
+            //app.UseMvc(routeBuilder =>
+            //{
+            //    routeBuilder.MapODataServiceRoute("ODataRoute", "odata", builder.GetEdmModel());
+            //    routeBuilder.Expand(Microsoft.AspNet.OData.Query.QueryOptionSetting.Allowed).Select().Count().OrderBy().Filter().MaxTop(null);
+            //    routeBuilder.EnableDependencyInjection();
+            //});
+            app.UseSwagger();
+            app.UseMvcWithDefaultRoute();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "LiveLarn.Service.Education");
+            });
+
         }
     }
 }
