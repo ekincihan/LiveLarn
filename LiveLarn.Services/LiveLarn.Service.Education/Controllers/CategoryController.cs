@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 
-
 namespace LiveLarn.Service.Education.Controllers
 {
     [Route("api/[controller]")]
@@ -33,7 +32,6 @@ namespace LiveLarn.Service.Education.Controllers
         [EnableQuery()]
         public IQueryable<Category> Get()
         {
-            _collection.FindAsync();
             return _collection.AsQueryable<Category>();
         }
 
