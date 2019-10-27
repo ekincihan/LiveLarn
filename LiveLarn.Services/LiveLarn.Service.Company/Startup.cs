@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AppLog.Core.Abstract;
+using AppLog.Logging.GrayLog;
 using IdentityServer4.AccessTokenValidation;
 using LiveLarn.Core.Configuration;
 using LiveLarn.Core.DataAccess;
@@ -43,7 +45,7 @@ namespace LiveLarn.Service.Company
                     inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
                 }
             });
-            //services.AddScoped<ILogger, GrayLogLogger>();
+            services.AddScoped<ILogger, GrayLogLogger>();
             services.AddAuthentication(
             IdentityServerAuthenticationDefaults.AuthenticationScheme)
                  .AddIdentityServerAuthentication(options =>
@@ -56,7 +58,6 @@ namespace LiveLarn.Service.Company
                  });
 
             services.AddTransient<IApplicationContext<CompanyDbContext>, EfApplicationContext<CompanyDbContext>>();
-            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             services.AddSwaggerGen(c =>
             {

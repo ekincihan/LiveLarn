@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppLog.Core.Abstract;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Core.DataAccess.EntityFramework;
 using LiveLarn.Service.Company.DataAccess.Contexts;
@@ -19,9 +20,11 @@ namespace LiveLarn.Service.Company.Controllers
     public class CompanyController : ControllerBase
     {
         private IApplicationContext<CompanyDbContext> _context;
-        public CompanyController(IApplicationContext<CompanyDbContext> context)
+        private readonly ILogger _logger;
+        public CompanyController(IApplicationContext<CompanyDbContext> context, ILogger logger)
         {
             _context = context;
+            _logger = logger;
         }
         [HttpGet]
         [EnableQuery()]
@@ -29,19 +32,29 @@ namespace LiveLarn.Service.Company.Controllers
         {
             using (var context = _context.Context())
             {
+                await _logger.Current().InfoAsync("test");
                 return await context.Set<Model.Entity.Company>().Include(t=>t.Branches).ToListAsync();
             }
         }
         [HttpPost]
         public async Task<IActionResult> Post(Model.Entity.Company company)
         {
-            using (var context = _context.Context())
+            try
             {
-                company.CreateDate = company.CreateDate ?? DateTime.UtcNow;
-                company.IsActive = true;
-                await context.Set<Model.Entity.Company>().AddAsync(company);
-                var csd = await context.SaveChangesAsync();
-                return new OkResult();
+                using (var context = _context.Context())
+                {
+                    company.CreateDate = company.CreateDate ?? DateTime.UtcNow;
+                    company.IsActive = true;
+                    await context.Set<Model.Entity.Company>().AddAsync(company);
+                    await context.SaveChangesAsync();
+
+                    await _logger.Current().InfoAsync("OK", "Test");
+                    return new OkResult();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
     }
