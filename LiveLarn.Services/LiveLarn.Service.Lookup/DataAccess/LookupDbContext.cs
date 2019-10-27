@@ -1,7 +1,6 @@
 ﻿using LiveLarn.Core.Configuration;
 using LiveLarn.Service.Lookup.Models.Entity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
