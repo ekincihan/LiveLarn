@@ -8,6 +8,7 @@ using LiveLarn.Service.Identity.DAL;
 using LiveLarn.Service.Identity.Helpers;
 using LiveLarn.Service.Identity.Models;
 using LiveLarn.Service.Identity.Models.Auth;
+using LiveLarn.Service.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
