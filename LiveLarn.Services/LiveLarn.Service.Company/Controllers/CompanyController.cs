@@ -20,8 +20,8 @@ namespace LiveLarn.Service.Company.Controllers
     public class CompanyController : ControllerBase
     {
         private IApplicationContext<CompanyDbContext> _context;
-        private readonly ILogger _logger;
-        public CompanyController(IApplicationContext<CompanyDbContext> context, ILogger logger)
+        private readonly ILogger<CompanyController> _logger;
+        public CompanyController(IApplicationContext<CompanyDbContext> context, ILogger<CompanyController> logger)
         {
             _context = context;
             _logger = logger;

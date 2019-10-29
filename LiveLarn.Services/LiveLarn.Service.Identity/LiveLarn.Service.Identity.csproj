@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AppLog.Logging.GrayLog" Version="1.0.2" />
+    <PackageReference Include="AppLog.Logging.GrayLog" Version="1.0.4" />
     <PackageReference Include="IdentityServer4" Version="2.4.0" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

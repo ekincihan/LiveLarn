@@ -45,7 +45,7 @@ namespace LiveLarn.Service.Company
                     inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
                 }
             });
-            services.AddScoped<ILogger, GrayLogLogger>();
+            services.AddScoped(typeof(ILogger<>), typeof(GrayLogLogger<>));
             services.AddAuthentication(
             IdentityServerAuthenticationDefaults.AuthenticationScheme)
                  .AddIdentityServerAuthentication(options =>
