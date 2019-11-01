@@ -6,6 +6,7 @@ using IdentityServer4.AccessTokenValidation;
 using LiveLarn.Core.Configuration;
 using LiveLarn.Core.DataAccess;
 using LiveLarn.Core.DataAccess.EntityFramework;
+using LiveLarn.Core.Infrastructure.Middleware;
 using LiveLarn.Service.Company.DataAccess.Contexts;
 using LiveLarn.Service.Company.Model.Entity;
 using Microsoft.AspNet.OData.Builder;
@@ -57,6 +58,9 @@ namespace LiveLarn.Service.Company
                      options.RequireHttpsMetadata = false; // only for development
                  });
 
+            services.AddHealthChecks()
+               .AddCheck<PostgreSqlHealthCheck<CompanyDbContext>>("Sql");
+
             services.AddTransient<IApplicationContext<CompanyDbContext>, EfApplicationContext<CompanyDbContext>>();
 
             services.AddSwaggerGen(c =>
@@ -79,7 +83,7 @@ namespace LiveLarn.Service.Company
             }
 
             app.UseAuthentication();
-
+            app.UseHealthChecks("/healthcheck");
             app.UseMvc();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 
