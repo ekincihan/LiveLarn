@@ -1,4 +1,5 @@
 ﻿using LiveLarn.Core.Infrastructure.Base;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,8 @@ namespace LiveLarn.Service.User.Models.Entities
     public class UserBase :EntityBase<Guid>
     {
         [Required]
-        public int UserId { get; set; }
+        public IdentityUser User{ get; set; }
+        public Guid UserId{ get; set; }
         [MaxLength(11)] 
         public string TCKN { get; set; }
         public string Name{ get; set; }
