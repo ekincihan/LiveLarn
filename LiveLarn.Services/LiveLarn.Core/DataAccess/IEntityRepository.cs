@@ -1,10 +1,7 @@
 ﻿using LiveLarn.Core.Infrastructure.Abstract.Base;
-using LiveLarn.Core.Infrastructure.Helper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LiveLarn.Core.DataAccess

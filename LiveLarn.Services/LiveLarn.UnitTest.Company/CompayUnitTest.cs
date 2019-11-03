@@ -1,4 +1,6 @@
 using Bogus;
+using LiveLarn.Service.Company;
+using LiveLarn.Test;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -14,7 +16,7 @@ namespace LiveLarn.UnitTest.Company
         [Fact]
         public async Task Test_Get_All()
         {
-            var client = new TestCompanyClientProvider().Client;
+            var client = new TestClientProvider<Startup>().Client;
             var response = await client.GetAsync("api/company");
 
             response.EnsureSuccessStatusCode();
@@ -24,7 +26,7 @@ namespace LiveLarn.UnitTest.Company
         [Fact]
         public async Task Test_Get_OData()
         {
-            var client = new TestCompanyClientProvider().Client;
+            var client = new TestClientProvider<Startup>().Client;
             var response = await client.GetAsync("api/Company?$select=name,id");
 
             response.EnsureSuccessStatusCode();
@@ -47,7 +49,7 @@ namespace LiveLarn.UnitTest.Company
                 }
             };
 
-            var client = new TestCompanyClientProvider().Client;
+            var client = new TestClientProvider<Startup>().Client;
             company.Name = "Fake.Company";
             var response = await client.PostAsync("api/Company", new StringContent(JsonConvert.SerializeObject(company), UnicodeEncoding.UTF8, "application/json"));
 

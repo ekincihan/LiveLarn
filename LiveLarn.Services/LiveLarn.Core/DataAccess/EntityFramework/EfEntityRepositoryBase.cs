@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LiveLarn.Core.DataAccess;
 using LiveLarn.Core.Infrastructure.Abstract.Base;
-using LiveLarn.Core.Infrastructure.Helper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using LiveLarn.Core.DataAccess;
 
 namespace Koton.ArthurService.Core.DataAccess.EntityFramework
 {
@@ -69,7 +66,7 @@ namespace Koton.ArthurService.Core.DataAccess.EntityFramework
         }
 
 
-        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, params string [] keys)
+        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null, params string[] keys)
         {
             using (var context = new TContext())
             {
@@ -126,7 +123,7 @@ namespace Koton.ArthurService.Core.DataAccess.EntityFramework
                 return entity;
             }
         }
-        public async Task<List<TEntity>> Include(Expression<Func<TEntity, bool>> filter = null, IEnumerable<Expression<Func<TEntity, bool>>> foreignKeys = null) 
+        public async Task<List<TEntity>> Include(Expression<Func<TEntity, bool>> filter = null, IEnumerable<Expression<Func<TEntity, bool>>> foreignKeys = null)
         {
             using (var context = new TContext())
             {

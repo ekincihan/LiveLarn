@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LiveLarn.Core.Infrastructure.Base;
+﻿using LiveLarn.Core.Infrastructure.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace LiveLarn.Core.DataAccess.EntityFramework

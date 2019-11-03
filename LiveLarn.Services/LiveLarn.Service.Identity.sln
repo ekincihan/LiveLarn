@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.Service.Identity", "LiveLarn.Service.Identity\LiveLarn.Service.Identity.csproj", "{CC395811-6432-4028-89BA-716293951D30}"
 EndProject
@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.UnitTest.Lookup", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.Service.Education", "LiveLarn.Service.Education\LiveLarn.Service.Education.csproj", "{BB55366C-F267-4019-AE49-642ACB53A31C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveLarn.UnitTest.Education", "LiveLarn.UnitTest.Education\LiveLarn.UnitTest.Education.csproj", "{EA14B106-1E0E-4097-81B3-21A1F160AE8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiveLarn.UnitTest.Education", "LiveLarn.UnitTest.Education\LiveLarn.UnitTest.Education.csproj", "{EA14B106-1E0E-4097-81B3-21A1F160AE8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveLarn.UnitTest.User", "LiveLarn.UnitTest.User\LiveLarn.UnitTest.User.csproj", "{0B6493B0-53C9-42D4-BE7C-E991D6D19DA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveLarn.Test", "LiveLarn.Test\LiveLarn.Test.csproj", "{62A4F6AA-3AA1-4FE4-A160-78A2410083F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{EA14B106-1E0E-4097-81B3-21A1F160AE8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA14B106-1E0E-4097-81B3-21A1F160AE8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA14B106-1E0E-4097-81B3-21A1F160AE8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B6493B0-53C9-42D4-BE7C-E991D6D19DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B6493B0-53C9-42D4-BE7C-E991D6D19DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B6493B0-53C9-42D4-BE7C-E991D6D19DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B6493B0-53C9-42D4-BE7C-E991D6D19DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A4F6AA-3AA1-4FE4-A160-78A2410083F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A4F6AA-3AA1-4FE4-A160-78A2410083F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A4F6AA-3AA1-4FE4-A160-78A2410083F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A4F6AA-3AA1-4FE4-A160-78A2410083F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
