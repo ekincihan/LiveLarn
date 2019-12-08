@@ -4,8 +4,6 @@ using AppLog.Core.Abstract;
 using AppLog.Logging.GrayLog;
 using IdentityServer4.AccessTokenValidation;
 using LiveLarn.Core.Configuration;
-using LiveLarn.Core.DataAccess;
-using LiveLarn.Core.DataAccess.EntityFramework;
 using LiveLarn.Core.Infrastructure.Middleware;
 using LiveLarn.Service.Company.DataAccess.Contexts;
 using LiveLarn.Service.Company.Model.Entity;
@@ -14,6 +12,7 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
@@ -46,6 +45,10 @@ namespace LiveLarn.Service.Company
                     inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
                 }
             });
+            services.AddDbContext<CompanyDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("CompanyDbContext"),
+                b => b.MigrationsAssembly("LiveLarn.Service.Company")));
+
             services.AddScoped(typeof(ILogger<>), typeof(GrayLogLogger<>));
             services.AddAuthentication(
             IdentityServerAuthenticationDefaults.AuthenticationScheme)
@@ -58,10 +61,9 @@ namespace LiveLarn.Service.Company
                      options.RequireHttpsMetadata = false; // only for development
                  });
 
-            services.AddHealthChecks()
-               .AddCheck<PostgreSqlHealthCheck<CompanyDbContext>>("Sql");
+            //services.AddHealthChecks()
+            //   .AddCheck<PostgreSqlHealthCheck<CompanyDbContext>>("Sql");
 
-            services.AddTransient<IApplicationContext<CompanyDbContext>, EfApplicationContext<CompanyDbContext>>();
 
             services.AddSwaggerGen(c =>
             {
@@ -83,7 +85,7 @@ namespace LiveLarn.Service.Company
             }
 
             app.UseAuthentication();
-            app.UseHealthChecks("/healthcheck");
+            //app.UseHealthChecks("/healthcheck");
             app.UseMvc();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 

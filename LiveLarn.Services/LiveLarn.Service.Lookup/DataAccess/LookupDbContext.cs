@@ -22,12 +22,8 @@ namespace LiveLarn.Service.Lookup.DataAccess
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(AppConfiguration.Instance.Configuration.GetConnectionString("LookupDbContext"));
+            optionsBuilder.UseNpgsql(AppConfiguration.Instance.Configuration.GetConnectionString("CompanyDbContext"));
             base.OnConfiguring(optionsBuilder);
-        }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
         }
     }
 }
