@@ -1,5 +1,4 @@
-﻿using AppLog.Core.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace LiveLarn.Service.Company.DataAccess.Contexts
 {
@@ -10,10 +9,5 @@ namespace LiveLarn.Service.Company.DataAccess.Contexts
         public CompanyDbContext(DbContextOptions<CompanyDbContext> options) : base(options)
         {
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseNpgsql(AppConfiguration.Instance.Configuration.GetConnectionString("LookupDbContext"));
-        //    base.OnConfiguring(optionsBuilder);
-        //}
     }
 }

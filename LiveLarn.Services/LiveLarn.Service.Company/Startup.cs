@@ -4,7 +4,6 @@ using AppLog.Core.Abstract;
 using AppLog.Logging.GrayLog;
 using IdentityServer4.AccessTokenValidation;
 using LiveLarn.Core.Configuration;
-using LiveLarn.Core.Infrastructure.Middleware;
 using LiveLarn.Service.Company.DataAccess.Contexts;
 using LiveLarn.Service.Company.Model.Entity;
 using Microsoft.AspNet.OData.Builder;
@@ -61,10 +60,6 @@ namespace LiveLarn.Service.Company
                      options.RequireHttpsMetadata = false; // only for development
                  });
 
-            //services.AddHealthChecks()
-            //   .AddCheck<PostgreSqlHealthCheck<CompanyDbContext>>("Sql");
-
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "LiveLarn.Service.Company", Version = "v1" });
@@ -85,7 +80,6 @@ namespace LiveLarn.Service.Company
             }
 
             app.UseAuthentication();
-            //app.UseHealthChecks("/healthcheck");
             app.UseMvc();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 

@@ -26,8 +26,6 @@ namespace LiveLarn.Service.Company.Controllers
         [EnableQuery()]
         public async Task<ActionResult<IEnumerable<Model.Entity.Company>>> Get()
         {
-
-            await _logger.Current().InfoAsync("test");
             return await _context.Set<Model.Entity.Company>().Include(t=>t.Branches).ToListAsync();
         }
         [HttpPost]
